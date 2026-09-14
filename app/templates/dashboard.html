@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block content %}
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">◈</span>
+    <div>
+      <h1>Watchdesk</h1>
+      <p class="brand-sub">Custom Threat Intelligence Platform</p>
+    </div>
+  </div>
+  <div class="topbar-actions">
+    <span id="sync-indicator" class="sync-indicator">syncing…</span>
+    <button id="refresh-btn" class="btn-primary">Refresh feeds</button>
+  </div>
+</header>
+
+<main class="layout">
+  <section class="stats-row">
+    <div class="stat-card">
+      <span class="stat-label">Total indicators</span>
+      <span class="stat-value" id="stat-total">—</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Corroborated (2+ feeds)</span>
+      <span class="stat-value" id="stat-corroborated">—</span>
+    </div>
+    <div class="stat-card accent-critical">
+      <span class="stat-label">Critical severity</span>
+      <span class="stat-value" id="stat-critical">—</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Feeds reporting</span>
+      <span class="stat-value" id="stat-feeds">—</span>
+    </div>
+  </section>
+
+  <section class="main-grid">
+    <div class="panel ioc-panel">
+      <div class="panel-header">
+        <h2>Indicators</h2>
+        <div class="filters">
+          <input type="text" id="filter-search" placeholder="Search value, malware, threat type…">
+          <select id="filter-type">
+            <option value="">All types</option>
+            <option value="ip">IP</option>
+            <option value="domain">Domain</option>
+            <option value="url">URL</option>
+            <option value="hash">Hash</option>
+          </select>
+          <select id="filter-severity">
+            <option value="">All severities</option>
+            <option value="critical">Critical</option>
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+          </select>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="ioc-table">
+          <thead>
+            <tr>
+              <th>Severity</th>
+              <th>Type</th>
+              <th>Indicator</th>
+              <th>Threat</th>
+              <th>Malware family</th>
+              <th>Sources</th>
+              <th>Last seen</th>
+            </tr>
+          </thead>
+          <tbody id="ioc-tbody">
+            <tr><td colspan="7" class="empty-row">Loading indicators…</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="pagination">
+        <button id="prev-page" class="btn-ghost">← Prev</button>
+        <span id="page-indicator">Page 1</span>
+        <button id="next-page" class="btn-ghost">Next →</button>
+      </div>
+    </div>
+
+    <aside class="panel feed-panel">
+      <div class="panel-header">
+        <h2>Feed health</h2>
+      </div>
+      <ul id="feed-list" class="feed-list">
+        <li class="empty-row">Loading…</li>
+      </ul>
+      <p class="feed-note">
+        ThreatFox and URLhaus need no API key. AbuseIPDB shows
+        <em>skipped</em> until a free key is added to <code>.env</code>.
+      </p>
+    </aside>
+  </section>
+</main>
+{% endblock %}
